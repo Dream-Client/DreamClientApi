@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Player {
+  id    Int     @id @default(autoincrement()) 
+  email String  @unique
+  name  String
+  discordId String
+  discordName String
+  notes String
+  patreonId String
+  patreonName String
+  manager Int
+  role Int
+  licences Licence[]
+}
+
+model Licence {
+  id    Int     @default(autoincrement()) @id
+  licenceKey String @unique
+  status Int
+  expirationDate DateTime
+
+  player Player @relation(fields: [playerId], references: [id]) 
+  playerId Int
+
+  featureMask String
+  hash1 String
+  hash2 String
+  hash3 String
+  hash4 String
+  hash5 String
+  hash6 String
+}
+
+model Log_Licence {
+  id    Int     @default(autoincrement()) @id
+  licenceKey String @unique
+  status Int
+  expirationDate DateTime
+  playerId Int
+  featureMask String
+  hash1 String
+  hash2 String
+  hash3 String
+  hash4 String
+  hash5 String
+  hash6 String
+  action String
+  timestamp DateTime @default(now())
+}
+
+model Log_Player {
+  id    Int     @id @default(autoincrement()) 
+  email String  @unique
+  name  String
+  discordId String
+  discordName String
+  notes String
+  patreonId String
+  patreonName String
+  manager Int
+  role Int
+  action String
+  timestamp DateTime @default(now())
+}
+
