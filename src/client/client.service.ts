@@ -7,6 +7,7 @@ export class ClientService {
   async getClient(getClientDto: GetClientDto) {
     // TODO: Validate licence
     // TODO: Validate hashes
+    // TODO: Handle first time
     // TODO: return binary stream
     return '';
   }

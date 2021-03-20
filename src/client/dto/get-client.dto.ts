@@ -1,18 +1,12 @@
-import { IsNotEmpty } from "class-validator";
+import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from "class-validator";
 
 export class GetClientDto {
   @IsNotEmpty()
+  @IsString()
   licence: string;
-  @IsNotEmpty()
-  hash1: string;
-  @IsNotEmpty()
-  hash2: string;
-  @IsNotEmpty()
-  hash3: string;
-  @IsNotEmpty()
-  hash4: string;
-  @IsNotEmpty()
-  hash5: string;
-  @IsNotEmpty()
-  hash6: string;
+
+  @IsArray()
+  @ArrayMinSize(6)
+  @IsString({ each: true })
+  hashes: string[];
 }
