@@ -1,0 +1,11 @@
+export const ROLES = {
+  PLAYER: 1000,
+  MODERATOR: 2000,
+  ADMIN: 10000,
+}
+
+export const LICENCE_STATUS = {
+  DISABLED: 1000,
+  NEW: 2000,
+  ACTIVE: 3000,
+}
