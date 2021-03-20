@@ -17,9 +17,9 @@ model Player {
   discordId String
   discordName String
   notes String
-  patreonId String
-  patreonName String
-  manager Int
+  patreonId String?
+  patreonName String?
+  manager Int?
   role Int
   licences Licence[]
 }
@@ -66,9 +66,9 @@ model Log_Player {
   discordId String
   discordName String
   notes String
-  patreonId String
-  patreonName String
-  manager Int
+  patreonId String?
+  patreonName String?
+  manager Int?
   role Int
   action String
   timestamp DateTime @default(now())
