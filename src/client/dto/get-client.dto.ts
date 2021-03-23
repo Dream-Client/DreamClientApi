@@ -1,8 +1,10 @@
 import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsLicence } from 'src/decorators/IsLicence.decorator';
 
 export class GetClientDto {
   @IsNotEmpty()
   @IsString()
+  @IsLicence()
   licence: string;
 
   @IsArray()
