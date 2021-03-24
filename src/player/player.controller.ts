@@ -8,27 +8,29 @@ export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Post()
-  create(@Body() createPlayerDto: CreatePlayerDto) {
-    return this.playerService.create(createPlayerDto);
+  async create(@Body() createPlayerDto: CreatePlayerDto) {
+    const player = await this.playerService.create(createPlayerDto);
+    return { id: player.id };
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.playerService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.playerService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
+  async update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
     return this.playerService.update(+id, updatePlayerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.playerService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.playerService.remove(+id);
+    return;
   }
 }

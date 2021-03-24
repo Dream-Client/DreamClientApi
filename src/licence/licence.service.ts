@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateLicenceDto } from './dto/create-licence.dto';
 import { UpdateLicenceDto } from './dto/update-licence.dto';
 
 @Injectable()
 export class LicenceService {
+  constructor(private prisma: PrismaService) { }
+
   create(createLicenceDto: CreateLicenceDto) {
     return 'This action adds a new licence';
   }
