@@ -28,7 +28,7 @@ export class ClientService {
     await fs.writeFile(path, file.buffer);
   }
 
-  // TODO: Management later
+  // TODO: Management later?
   // findAll() {
   //   return `This action returns all client`;
   // }

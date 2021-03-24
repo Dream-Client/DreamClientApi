@@ -5,7 +5,7 @@ import { GetClientDto } from './dto/get-client.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {Response} from 'express'
 
-@Controller('client')
+@Controller('api/v3/client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
