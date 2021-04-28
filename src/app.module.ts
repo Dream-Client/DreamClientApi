@@ -5,6 +5,7 @@ import { ClientModule } from './client/client.module';
 import { PlayerModule } from './player/player.module';
 import { LicenceModule } from './licence/licence.module';
 import { ConfigModule } from '@nestjs/config';
+import { FrontendModule } from './frontend/frontend.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -14,7 +15,8 @@ import configuration from './config/configuration';
     LicenceModule,
     ConfigModule.forRoot({
       load: [configuration],
-  })],
+  }),
+    FrontendModule],
   controllers: [AppController],
   providers: [AppService],
 })
