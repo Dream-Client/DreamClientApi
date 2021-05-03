@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, HttpException, HttpStatus, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  HttpException,
+  HttpStatus,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ClientService } from './client.service';
 import { UploadClientDto } from './dto/upload-client.dto';
 import { GetClientDto } from './dto/get-client.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {Response} from 'express'
+import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('api/v3/client')
+@Controller('api/v3/clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
-  // Get client
   @Post()
   async getClient(@Body() getClientDto: GetClientDto, @Res() res: Response) {
     const path = await this.clientService.getClient(getClientDto);
@@ -21,13 +35,18 @@ export class ClientController {
     });
   }
 
-  // Upload client
-  // TODO: Auth
   @Patch()
+  @UseGuards(AuthGuard('basic'))
   @UseInterceptors(FileInterceptor('file'))
-  async uploadClient(@UploadedFile() file: Express.Multer.File, @Body() uploadClientDto: UploadClientDto) {
-    if(!file) {
-      throw new HttpException('Client file was not provided', HttpStatus.BAD_REQUEST);
+  async uploadClient(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() uploadClientDto: UploadClientDto
+  ) {
+    if (!file) {
+      throw new HttpException(
+        'Client file was not provided',
+        HttpStatus.BAD_REQUEST
+      );
     }
 
     return await this.clientService.uploadClient(file, uploadClientDto);

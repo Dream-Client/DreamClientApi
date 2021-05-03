@@ -2,15 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
-import {
-  Player
-} from '@prisma/client';
+import { Player } from '@prisma/client';
 @Injectable()
 export class PlayerService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
-    return this.prisma.player.create({data: createPlayerDto});
+    return this.prisma.player.create({ data: createPlayerDto });
   }
 
   async findAll(): Promise<Player[]> {
@@ -20,11 +18,11 @@ export class PlayerService {
   async findOne(id: number): Promise<Player> {
     const player = await this.prisma.player.findUnique({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
 
-    if(!player) {
+    if (!player) {
       throw new HttpException('Player not found', HttpStatus.NOT_FOUND);
     }
 
@@ -34,8 +32,8 @@ export class PlayerService {
   async findByEmail(email: string): Promise<Player> {
     return this.prisma.player.findUnique({
       where: {
-        email: email
-      }
+        email: email,
+      },
     });
   }
 
@@ -46,17 +44,17 @@ export class PlayerService {
         id: id,
       },
       data: {
-        ...updatePlayerDto
-      }
+        ...updatePlayerDto,
+      },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     // TODO: Save to logs old state
-    return this.prisma.player.delete({
+    return await this.prisma.player.delete({
       where: {
         id: id,
-      }
+      },
     });
   }
 }

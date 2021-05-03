@@ -1,6 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateLicenceDto } from './create-licence.dto';
+import { LicenceDto } from './licence.dto';
 
-export class UpdateLicenceDto extends PartialType(CreateLicenceDto) {
-  
-}
+export class UpdateLicenceDto extends PartialType(LicenceDto) {}

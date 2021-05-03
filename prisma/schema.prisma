@@ -27,19 +27,21 @@ model Player {
 model Licence {
   id    Int     @default(autoincrement()) @id
   licenceKey String @unique
-  status Int
+  status Int @default(2000)
   expirationDate DateTime
 
   player Player @relation(fields: [playerId], references: [id]) 
   playerId Int
 
-  featureMask String
-  hash1 String
-  hash2 String
-  hash3 String
-  hash4 String
-  hash5 String
-  hash6 String
+  featureMask String @default("ffffffff")
+  hashes String @default("[]")
+}
+
+model Client {
+  id    Int     @default(autoincrement()) @id
+  uploadDate DateTime @default(now())
+  checksum String
+  vrcVersion String
 }
 
 model Log_Licence {
@@ -49,12 +51,7 @@ model Log_Licence {
   expirationDate DateTime
   playerId Int
   featureMask String
-  hash1 String
-  hash2 String
-  hash3 String
-  hash4 String
-  hash5 String
-  hash6 String
+  hashes String
   action String
   timestamp DateTime @default(now())
 }

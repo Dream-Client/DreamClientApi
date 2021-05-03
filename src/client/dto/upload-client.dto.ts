@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UploadClientDto {
   // Interceptor takes file away anyway @_@
@@ -7,4 +7,8 @@ export class UploadClientDto {
   @IsNotEmpty()
   @IsString()
   checksum: string;
+
+  @IsNotEmpty()
+  @IsString()
+  vrcVersion: string;
 }

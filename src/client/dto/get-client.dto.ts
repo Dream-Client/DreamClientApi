@@ -5,7 +5,7 @@ export class GetClientDto {
   @IsNotEmpty()
   @IsString()
   @IsLicence()
-  licence: string;
+  licenceKey: string;
 
   @IsArray()
   @ArrayMinSize(6)
