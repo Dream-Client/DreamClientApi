@@ -1,4 +1,5 @@
 import {
+  IsDefined,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -8,20 +9,24 @@ import {
 import { IsPlayerAlreadyExist } from 'src/decorators/IsPlayerAlreadyExist.decorator';
 
 export class CreatePlayerDto {
+  @IsDefined()
   @IsNotEmpty()
   @IsString()
   @IsEmail()
   @IsPlayerAlreadyExist()
   email: string;
 
+  @IsDefined()
   @IsNotEmpty()
   @IsString()
   name: string;
 
+  @IsDefined()
   @IsNotEmpty()
   @IsString()
   discordId: string;
 
+  @IsDefined()
   @IsNotEmpty()
   @IsString()
   discordName: string;

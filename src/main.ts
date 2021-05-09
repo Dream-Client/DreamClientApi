@@ -9,6 +9,7 @@ import { ActivityLogs } from './middlewares/activitylogs.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.use(ActivityLogs);
   app.use(express.static(`${process.cwd()}/Assets`));
