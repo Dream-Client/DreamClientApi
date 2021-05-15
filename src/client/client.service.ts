@@ -1,4 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
+
+import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { UploadClientDto } from './dto/upload-client.dto';
 import { GetClientDto } from './dto/get-client.dto';
 import { promises as fs } from 'fs';
@@ -20,8 +22,24 @@ export class ClientService {
   async getClient(getClientDto: GetClientDto) {
     await this.validateLicence(getClientDto);
 
+    const client = await this.prisma.client.findFirst({
+      where: {
+        checksum: getClientDto.checksum,
+      },
+      orderBy: {
+        uploadDate: 'desc',
+      },
+    });
+
+    if (!client) {
+      throw new HttpException(
+        'Client file for checksum does not exist',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
     const path = `${this.configService.get<string>('CLIENT_UPLOAD_DIR')}/${
-      getClientDto.checksum
+      client.path
     }`;
 
     try {
@@ -88,16 +106,19 @@ export class ClientService {
     file: Express.Multer.File,
     uploadClientDto: UploadClientDto
   ) {
+    const fileName = randomStringGenerator();
+
     await this.prisma.client.create({
       data: {
+        path: fileName,
         checksum: uploadClientDto.checksum,
         vrcVersion: uploadClientDto.vrcVersion,
       },
     });
 
-    const path = `${this.configService.get<string>('CLIENT_UPLOAD_DIR')}/${
-      uploadClientDto.checksum
-    }`;
+    const path = `${this.configService.get<string>(
+      'CLIENT_UPLOAD_DIR'
+    )}/${fileName}`;
 
     await fs.writeFile(path, file.buffer);
   }
@@ -108,6 +129,7 @@ export class ClientService {
   }
 
   async remove(id: number) {
+    // TODO: Remove file
     return await this.prisma.client.delete({
       where: {
         id: id,

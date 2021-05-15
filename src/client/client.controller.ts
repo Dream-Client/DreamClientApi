@@ -51,4 +51,16 @@ export class ClientController {
 
     return await this.clientService.uploadClient(file, uploadClientDto);
   }
+
+  @Get()
+  @UseGuards(AuthGuard('basic'))
+  async getClients() {
+    return await this.clientService.findAll();
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard('basic'))
+  remove(@Param('id') id: string) {
+    return this.clientService.remove(+id);
+  }
 }

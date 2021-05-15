@@ -41,6 +41,7 @@ model Client {
   id    Int     @default(autoincrement()) @id
   uploadDate DateTime @default(now())
   checksum String
+  path String @default("")
   vrcVersion String
 }
 
