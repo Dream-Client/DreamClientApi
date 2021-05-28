@@ -9,9 +9,7 @@ import {
 import { IsPlayerAlreadyExist } from 'src/decorators/IsPlayerAlreadyExist.decorator';
 
 export class CreatePlayerDto {
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
   @IsEmail()
   @IsPlayerAlreadyExist()
   email: string;
