@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `player` MODIFY `email` VARCHAR(191);
+ALTER TABLE `Player` MODIFY `email` VARCHAR(191);
