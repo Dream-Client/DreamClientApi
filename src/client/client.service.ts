@@ -129,7 +129,18 @@ export class ClientService {
   }
 
   async remove(id: number) {
-    // TODO: Remove file
+    const client = await this.prisma.client.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    const path = `${this.configService.get<string>('CLIENT_UPLOAD_DIR')}/${
+      client.path
+    }`;
+
+    await fs.rm(path);
+
     return await this.prisma.client.delete({
       where: {
         id: id,
